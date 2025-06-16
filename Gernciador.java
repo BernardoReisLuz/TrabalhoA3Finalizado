@@ -8,7 +8,7 @@ public class Gernciador {
 		participantes.add(pessoa);
 	}
 	public void removerParticipante(String nome) {
-		participantes.removeIf(pessoa -> pessoa.getNome().equalsIgnoreCase(null));
+		participantes.removeIf(pessoa -> pessoa.getNome().equalsIgnoreCase(nome));
 		
 		
 	}
@@ -40,7 +40,7 @@ public class Gernciador {
         }
 
     public void removerDesafio(String nome) {
-        desafio.removeIf(desafi -> desafi.getNome().equalsIgnoreCase(nome));
+        desafio.removeIf(desaffi -> desaffi.getNome().equalsIgnoreCase(nome));
     }
 
     public void listarDesafios() {
