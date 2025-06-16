@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner entrada = new Scanner(System.in);
-		Gernciador gerencia = new Gernciador();
+		Gerenciador gerencia = new Gerenciador();
 		NumeroPessoas numP = new NumeroPessoas();
 		System.out.println("---- Qual ação deseja realizar ? ----");
 		int selecao = 0 ;
@@ -51,11 +51,10 @@ public class Main {
 							int n = i + 1 ;
 							System.out.println("Qual o nome do "+ n + " Desafio?");
 							String NomeD = entrada.nextLine();	
-						   float ParticipanteM = numP.getNumerototal();
-						   System.out.println("--Selecione como sera dividido--"  + "\n 1- Metade " +  "\n 2- 1/4" +  "\n 3- 1/6");
+						   float ParticipanteM = numP.getTotalBruto();
+						   float partido = numP.getNumerototal();
+						   System.out.println("--Selecione como sera dividido para passar ao proximo dessafio--"  + "\n 1- Metade " +  "\n 2- 1/4" +  "\n 3- 1/6");
 						   int eliminados = entrada.nextInt();
-						   float Sobra = SobraParticipantes(ParticipanteM, eliminados);
-						   numP.setNumerototal(Sobra);
 							System.out.println("Escreva a quantidade de regras que ira ter esse desafio :");
 							int Nregras = entrada.nextInt();
 							entrada.nextLine();
@@ -69,6 +68,8 @@ public class Main {
 							System.out.println("Escolha o nome do local da prova");
 							String LocalNome = entrada.nextLine();
 							Local localselecionado = gerencia.buscarLocalPorNome(LocalNome);
+							float Sobra = SobraParticipantes(partido, eliminados);
+							numP.setNumerototal(Sobra);
 							
 							if(localselecionado != null) {
 								if(localselecionado.getCapacidade() >= ParticipanteM) {
@@ -90,6 +91,10 @@ public class Main {
 							
 				break;
 			case 3 :
+				System.out.println("Quantos Locais deseja adicionar ?");
+				int LocaisN = entrada.nextInt();
+				entrada.nextLine();
+				for(int s = 0 ; s < LocaisN ; s++) {
 					System.out.println("Nome do Local :");
 					String nomeLocal = entrada.nextLine();
 					System.out.println("Qual a capacidade desse Local? ");
@@ -97,6 +102,7 @@ public class Main {
 					entrada.nextLine();
 					Local local = new Local(nomeLocal, Capacidade);
 					gerencia.adicionarLocal(local);
+					}
 				break;
 			case 4 : 
 					System.out.println("Qual ação deseja realizar excluir ou editar um Participante? Escreva excluir para excluir e editar para editar");
@@ -111,9 +117,17 @@ public class Main {
 						entrada.nextLine();
 						gerencia.editarParticipantes(nomeAntingo, nomeNovo, idadeNova);
 					}else if(escolha.equalsIgnoreCase("excluir")) {
-						System.out.println("Qual o nome do Participante que deseja Excluir?");
-						String excluir = entrada.nextLine();
-						gerencia.removerParticipante(excluir);
+						System.out.println("Quantidade que vai excluir?");
+						int exq =entrada.nextInt();
+						entrada.nextLine();
+						System.out.println("\n--- Participantes ---");
+						gerencia.listarParticipantes();
+						for(int g = 0 ; g < exq ; g ++) {
+							System.out.println("Qual o nome do Participante que deseja Excluir?");
+							String excluir = entrada.nextLine();
+							gerencia.removerParticipante(excluir);
+						}
+						
 					}
 				break;
 			case 5 :
@@ -143,9 +157,16 @@ public class Main {
 							System.out.println("Não existe esse Local");
 						}
 					}else if(escolhaa.equalsIgnoreCase("excluir")) {
+						System.out.println("Quantidade que vai excluir?");
+						int exq =entrada.nextInt();
+						entrada.nextLine();
+						System.out.println("\n --- Desafios ---");
+						gerencia.listarDesafios();
+						for(int g = 0 ; g < exq ; g ++) {
 						System.out.println("Qual o nome do Jogo que deseja Excluir?");
 						String Jexcluir = entrada.nextLine();
 						gerencia.removerDesafio(Jexcluir);				
+					}
 					}
 				break;
 			case 6:
@@ -156,7 +177,7 @@ public class Main {
 				System.out.println("\n --- Desafios ---");
 				gerencia.listarDesafios();
 				System.out.println("\n --- Quantidade de pessoas que sobram apos os desafios ---");
-				System.out.println("de  "+ numP.getTotalBruto() + "sobrou " + numP.getNumerototal());
+				System.out.println("de  "+ numP.getTotalBruto() + " pessoas sobrou " + numP.getNumerototal() + " que sera a campeão ou dividir o premio e esse campeão é ");
 				break;
 				
 			case 7:
@@ -195,6 +216,7 @@ public class Main {
 	}
 	
 	}
+
 
 
 
